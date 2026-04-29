@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ws melnick</title>
+
+<style>
+  body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  h1 {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 20px;
+    margin: 0;
+    opacity: 0.7;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 6px;
+    padding: 6px;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer;
+  }
+
+  /* Fullscreen viewer */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox img {
+    max-width: 95%;
+    max-height: 95%;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>w s melnick</h1>
+
+<div class="grid">
+  <img src="images/wsmelnick_roundtower1_20260408_001.jpg">
+  <img src="images/wsmelnick_roundtower1_20260408_002.jpg">
+//  <img src="images/3.jpg">
+</div>
+
+<div class="lightbox" id="lightbox">
+  <img id="lightbox-img">
+</div>
+
+<script>
+  const images = document.querySelectorAll('.grid img');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  let currentIndex = 0;
+
+  images.forEach((img, index) => {
+    img.addEventListener('click', () => {
+      currentIndex = index;
+      showImage();
+      lightbox.style.display = 'flex';
+    });
+  });
+
+  function showImage() {
+    lightboxImg.src = images[currentIndex].src;
+  }
+
+  // Click to close
+  lightbox.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.style.display === 'flex') {
+      if (e.key === 'ArrowRight') {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage();
+      }
+      if (e.key === 'ArrowLeft') {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage();
+      }
+      if (e.key === 'Escape') {
+        lightbox.style.display = 'none';
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
